@@ -17,6 +17,8 @@ from django.conf.urls import url
 from django.contrib import admin
 from Liuyan.views import hello
 from Liuyan.views import comment
+from Liuyan.views import cheer
+from Liuyan.views import like
 from Liuyan.views import hours_ahead
 from Liuyan.views import template_test2
 import settings
@@ -30,5 +32,5 @@ urlpatterns = [
     url(r'^comm/', comment),
     #post
     url(r'^cheer/', cheer),
-    url(r'^like/', likecomm),
+    url(r'^like/', like),
 ]

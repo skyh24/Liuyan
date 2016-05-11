@@ -62,10 +62,10 @@
 			//alert(name+":"+comm+comm.length)
 			if(name=="") {alert("名字不能为空"); return;}
 			if(comm.length < 5) {alert("寄语不能少于5个字"); return;}
-			$("#name").val("")
-			$("#comment").val("")
-			$.post("/cheer/", {"name": name, "comm", comm}, function(result){
-				alert(result);
+			$.post("/cheer/", {"name": name, "comm": comm}, function(result){
+			    $("#comment").val("")
+			    $("#name").val("")
+                alert(result);
 			});
 		});
 		$(".like").click(function(){
@@ -105,7 +105,7 @@
 	<div class="liuyan" style="margin: 1px auto; padding:5px; visibility: visible;">
 		<p style="width: 95%; margin:5px auto;"><b>{{ item.name }}:</b></p>
 		<p style="width: 95%; margin:5px auto;">{{ item.comm }}</p>
-		<div class="like" cid="{{ cid }}" align="right" style="width: 95%; margin: 5px auto;">
+		<div class="like" cid="{{ item.cid }}" align="right" style="width: 95%; margin: 5px auto;">
 			<p style="display: inline-block; vertical-align: middle;">已赞 <b style="color: red;">{{ item.like }}</b></p>
 			<a href="javascript:void(0)" style="display: inline-block; vertical-align: middle;">
 				<img style="height:20px; width:23px;" src="../static/img/heart.png" />

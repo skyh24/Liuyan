@@ -1,6 +1,7 @@
 from django.template.loader import get_template
 from django.shortcuts import render_to_response
 from django.template import Template, Context
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import simplejson as json
 import datetime
@@ -39,26 +40,35 @@ def comment(request):
     cur = db.cursor()
     cur.execute('SELECT count(*) from tb_liuyan')
     rows = cur.fetchall()
-    cnt = rows[0]
+    cnt = rows[0][0]
     print cnt
 
     cur.execute('SELECT * FROM tb_liuyan')
     rows = cur.fetchall()
-    item_list = rows
+    print rows
+    item_list = []
+    for row in rows:
+        item = {}
+        item["cid"] = row[0]
+        item["name"] = row[1]
+        item["comm"] = row[2]
+        item["like"] = row[3]
+        item_list.append(item)
     print item_list
     
     cur.close()
     db.close()
-    return render_to_response('index.html')
+    return render_to_response('index.html', {"count": cnt, "item_list": item_list})
     #return HttpResponse(str(rows))
 
+@csrf_exempt
 def cheer(request):
     dict = {}
     try:
         info = "Recv data"
-        req = json.loads(request.raw_post_data)
-        name = req['name']
-        comment = req['comment']
+        #req = json.loads(request.raw_post_data)
+        name = request.POST['name']
+        comment = request.POST['comm']
         print name, comment
 
         info = "DB insert"
@@ -68,8 +78,12 @@ def cheer(request):
         cur.close()
         db.close()
         info = "Success"
-    except Error:
-        print Error
+    except Exception, e:
+        print "%s" % str(e)
     dict['message']=info
-    json=simplejson.dumps(dict)
-    return HttpResponse(json)
+    myjson=json.dumps(dict)
+    return HttpResponse(myjson)
+
+@csrf_exempt
+def like(request):
+    return HttpRespnse("like")
