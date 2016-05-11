@@ -43,7 +43,7 @@ def comment(request):
     cnt = rows[0][0]
     print cnt
 
-    cur.execute('SELECT * FROM tb_liuyan')
+    cur.execute('SELECT * FROM tb_liuyan ORDER BY likes')
     rows = cur.fetchall()
     print rows
     item_list = []
@@ -74,6 +74,8 @@ def cheer(request):
         info = "DB insert"
         db = MySQLdb.connect(user=USER, db=DBNAME, passwd=PASS, host=HOST)
         cur = db.cursor()
+        cur.execute('insert into tb_liuyan (user, comment, likes) values (%s, %s, 1)' % (name, comment));
+        db.commit()
         #
         cur.close()
         db.close()
@@ -86,4 +88,24 @@ def cheer(request):
 
 @csrf_exempt
 def like(request):
-    return HttpRespnse("like")
+    try:
+        info = "Recv data"
+        cid = request.POST['cid']
+        db = MySQLdb.connect(user=USER, db=DBNAME, passwd=PASS, host=HOST)
+        cur = db.cursor()
+        info = "DB select"
+        cur.execute("select likes from tb_liuyan where cid=%s" % cid);
+        rows = cur.fetchall()
+        likes = rows[0][0]
+        likes += 1
+        print "cid like", cid, likes
+
+        info = "DB insert"
+        cur.execute('update tb_liuyan likes=%s where cid=%s ' % (likes, cid));
+        db.commit()
+        cur.close()
+        db.close()
+        info = "Success"
+    except Exception, e:
+        print "%s" % str(e) 
+    return HttpRespnse(info)

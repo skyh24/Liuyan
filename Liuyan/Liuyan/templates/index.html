@@ -70,7 +70,11 @@
 		});
 		$(".like").click(function(){
 			var cid = $(this).attr("cid");
-			alert(cid);
+			$.post("/like/", {"cid": cid}, function(result){
+				num = $("#b"+cid).html()
+				$("#b"+cid).html(num+1)
+                alert(result);
+			});
 		});
 	})
 		
@@ -106,7 +110,7 @@
 		<p style="width: 95%; margin:5px auto;"><b>{{ item.name }}:</b></p>
 		<p style="width: 95%; margin:5px auto;">{{ item.comm }}</p>
 		<div class="like" cid="{{ item.cid }}" align="right" style="width: 95%; margin: 5px auto;">
-			<p style="display: inline-block; vertical-align: middle;">已赞 <b style="color: red;">{{ item.like }}</b></p>
+			<p style="display: inline-block; vertical-align: middle;">已赞 <b id="b{{ item.cid }}" style="color: red;">{{ item.like }}</b></p>
 			<a href="javascript:void(0)" style="display: inline-block; vertical-align: middle;">
 				<img style="height:20px; width:23px;" src="../static/img/heart.png" />
 			</a>
