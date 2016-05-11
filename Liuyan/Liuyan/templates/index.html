@@ -11,7 +11,7 @@
 		margin: 0px;
 	}
 
-	.comment, .liuyan, .qrcode {
+	.commdiv, .liuyan, .qrcode {
 		background-color: #FFFFFF;
 		font-family: 'Microsoft YaHei';
 	}
@@ -55,8 +55,18 @@
 	
 	</style>
 	<script type="text/javascript">
-		$("#submit").click();
-		$("#like").click();
+	$(document).ready(function(){
+		$("#submit").click(function(){
+			var name=$("#name").val()
+			var comm=$("#comment").val()
+
+		});
+		$(".like").click(function(){
+
+		});
+	})
+		
+		
 	</script>
 </head>
 <body>
@@ -64,7 +74,7 @@
 	<img style="width: 100%;" src="../static/img/cover.jpg" />
 </div>
 
-<div class="comment" style="margin: 1px auto; padding:5px; visibility: visible;">
+<div class="commdiv" style="margin: 1px auto; padding:5px; visibility: visible;">
 	<div id="user" align="right" style="width: 95%; margin: 5px auto;">
 		<h3 style="display: inline-block; margin:5px auto;">我是</h3>
 		<h2 style="display: inline-block; color: red; margin:5px auto; font-family: 'SimSun';">义忠仁</h2>
@@ -72,36 +82,32 @@
 	</div>
 	<textarea id="comment" name="comment" rows="4" placeholder="请留下高考寄语！" style="width: 95%; margin:5px auto;" ></textarea> 
 	<div id="cheer" align="right" style="width: 95%; margin: 5px auto;">
-		<h4 style="display: inline-block; margin: 10px auto; vertical-align: middle;">您是第<b style="color: red; margin: 5px">1000</b>个为二中高考</h4>
+		<h4 style="display: inline-block; margin: 10px auto; vertical-align: middle;">您是第<b style="color: red; margin: 5px">{{ count }}</b>个为二中高考</h4>
 		<button id="submit" type="submit">加油</button>
 	</div>
 </div>
 
-<div class="liuyan" style="margin: 1px auto; padding:5px; visibility: visible;">
-	<p style="width: 95%; margin:5px auto;"><b>名字:</b></p>
-	<p style="width: 95%; margin:5px auto;">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
-	<div class="like" cid="" align="right" style="width: 95%; margin: 5px auto;">
-		<p style="display: inline-block; vertical-align: middle;">已赞 <b style="color: red;">103</b></p>
-		<a href="javascript:void(0)" style="display: inline-block; vertical-align: middle;">
-			<img style="height:20px; width:23px;" src="../static/img/heart.png" />
-		</a>
+{% for item in item_list %}
+	{% if forloop.counter = 3 %}
+	<div class="qrcode" style="margin: 1px auto; padding:5px; visibility: visible;">
+		<p style="width: 95%; margin: 5px auto;"> 可关注以下二维码获取高考动态：</p>
+		<img style="width: 100%;" src="../static/img/qrcode.jpg" />
 	</div>
-</div>
-<div class="liuyan" style="margin: 1px auto; padding:5px; visibility: visible;">
-	<p style="width: 95%; margin:5px auto;"><b>名字:</b></p>
-	<p style="width: 95%; margin:5px auto;">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
-	<div class="like" cid="" align="right" style="width: 95%; margin: 5px auto;">
-		<p style="display: inline-block; vertical-align: middle;">已赞 <b style="color: red;">103</b></p>
-		<a href="javascript:void(0)" style="display: inline-block; vertical-align: middle;">
-			<img style="height:20px; width:23px;" src="../static/img/heart.png" />
-		</a>
+	{% endif %}
+	
+	<div class="liuyan" style="margin: 1px auto; padding:5px; visibility: visible;">
+		<p style="width: 95%; margin:5px auto;"><b>{{ name }}:</b></p>
+		<p style="width: 95%; margin:5px auto;">{{ comment }}</p>
+		<div class="like" cid="{{ cid }}" align="right" style="width: 95%; margin: 5px auto;">
+			<p style="display: inline-block; vertical-align: middle;">已赞 <b style="color: red;">{{ likes }}</b></p>
+			<a href="javascript:void(0)" style="display: inline-block; vertical-align: middle;">
+				<img style="height:20px; width:23px;" src="../static/img/heart.png" />
+			</a>
+		</div>
 	</div>
-</div>
+{% endfor %}
 
-<div class="qrcode" style="margin: 1px auto; padding:5px; visibility: visible;">
-	<p style="width: 95%; margin: 5px auto;"> 可关注以下二维码获取高考动态：</p>
-	<img style="width: 100%;" src="../static/img/qrcode.jpg" />
-</div>
+
 
 </body>
 </html>

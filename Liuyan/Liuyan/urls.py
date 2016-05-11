@@ -28,4 +28,7 @@ urlpatterns = [
     url(r'^temp/', template_test2),
     url( r'^static/(?P<path>.*)$', 'django.views.static.serve',{ 'document_root': settings.STATIC_ROOT }), 
     url(r'^comm/', comment),
+    #post
+    url(r'^cheer/', cheer),
+    url(r'^like/', likecomm),
 ]

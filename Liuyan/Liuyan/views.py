@@ -2,6 +2,7 @@ from django.template.loader import get_template
 from django.shortcuts import render_to_response
 from django.template import Template, Context
 from django.http import HttpResponse
+import simplejson as json
 import datetime
 import MySQLdb
 
@@ -30,16 +31,45 @@ def template_test2(request):
 USER = 'root'
 PASS = '891010'
 DBNAME = 'liuyan'
+HOST = 'localhost'
 PORT = 3306
 
 def comment(request):
     db = MySQLdb.connect(user='root', db='liuyan', passwd='891010', host='localhost')
     cur = db.cursor()
+    cur.execute('SELECT count(*) from tb_liuyan')
+    rows = cur.fetchall()
+    cnt = rows[0]
+    print cnt
+
     cur.execute('SELECT * FROM tb_liuyan')
     rows = cur.fetchall()
+    item_list = rows
+    print item_list
+    
     cur.close()
     db.close()
     return render_to_response('index.html')
     #return HttpResponse(str(rows))
 
+def cheer(request):
+    dict = {}
+    try:
+        info = "Recv data"
+        req = json.loads(request.raw_post_data)
+        name = req['name']
+        comment = req['comment']
+        print name, comment
 
+        info = "DB insert"
+        db = MySQLdb.connect(user=USER, db=DBNAME, passwd=PASS, host=HOST)
+        cur = db.cursor()
+        #
+        cur.close()
+        db.close()
+        info = "Success"
+    except Error:
+        print Error
+    dict['message']=info
+    json=simplejson.dumps(dict)
+    return HttpResponse(json)
