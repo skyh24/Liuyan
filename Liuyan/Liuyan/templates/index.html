@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+	<title> 二中加油 </title>
+	<script type="text/javascript" src="../static/js/jquery-2.1.4.min.js"></script>
+	<style type="text/css">
+	body {
+		background-color: #FFFFCC;
+		margin: 0px;
+	}
+
+	.comment, .liuyan, .qrcode {
+		background-color: #FFFFFF;
+		font-family: 'Microsoft YaHei';
+	}
+	input, textarea {
+    	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    	transition: border linear 0.2s, box-shadow linear 0.2s;
+	}
+	input, textarea, select {
+	    font-size: 1em;
+	    display: inline-block;
+	    padding: 4px;
+	    color: #555555;
+	    vertical-align: middle;
+	    background-color: #ffffff;
+	    border: 1px solid #cccccc;
+	    border-radius: 3px;
+	    margin: 3px 0;
+	}
+	input:focus,
+	textarea:focus {
+	    border-color: rgba(82, 168, 236, 0.8);
+	    outline: 0;
+	    outline: thin dotted \9;    /* IE6-9 */  
+	    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+	}
+	button {
+		color: #fff;
+    	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    	background-image: linear-gradient(to bottom,#ee5f5b,#bd362f);
+    	background-color: #da4f49;
+    	display: inline-block;
+	    padding: 6px 15px;
+	    margin-bottom: 0;
+	    font-size: 20px;
+	    line-height: 20px;
+	    vertical-align: middle;
+    	cursor: pointer;
+    	border: 0px solid #ccc;
+    	border-radius: 4px;
+	}
+	
+	</style>
+	<script type="text/javascript">
+		$("#submit").click();
+		$("#like").click();
+	</script>
+</head>
+<body>
+<div id="cover" style="margin: 0px auto; visibility: visible;">
+	<img style="width: 100%;" src="../static/img/cover.jpg" />
+</div>
+
+<div class="comment" style="margin: 1px auto; padding:5px; visibility: visible;">
+	<div id="user" align="right" style="width: 95%; margin: 5px auto;">
+		<h3 style="display: inline-block; margin:5px auto;">我是</h3>
+		<h2 style="display: inline-block; color: red; margin:5px auto; font-family: 'SimSun';">义忠仁</h2>
+		<input id="name" name="name" style="display: inline-block; width: 100px; vertical-align:bottom;" placeholder="您的大名" />
+	</div>
+	<textarea id="comment" name="comment" rows="4" placeholder="请留下高考寄语！" style="width: 95%; margin:5px auto;" ></textarea> 
+	<div id="cheer" align="right" style="width: 95%; margin: 5px auto;">
+		<h4 style="display: inline-block; margin: 10px auto; vertical-align: middle;">您是第<b style="color: red; margin: 5px">1000</b>个为二中高考</h4>
+		<button id="submit" type="submit">加油</button>
+	</div>
+</div>
+
+<div class="liuyan" style="margin: 1px auto; padding:5px; visibility: visible;">
+	<p style="width: 95%; margin:5px auto;"><b>名字:</b></p>
+	<p style="width: 95%; margin:5px auto;">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
+	<div class="like" cid="" align="right" style="width: 95%; margin: 5px auto;">
+		<p style="display: inline-block; vertical-align: middle;">已赞 <b style="color: red;">103</b></p>
+		<a href="javascript:void(0)" style="display: inline-block; vertical-align: middle;">
+			<img style="height:20px; width:23px;" src="../static/img/heart.png" />
+		</a>
+	</div>
+</div>
+<div class="liuyan" style="margin: 1px auto; padding:5px; visibility: visible;">
+	<p style="width: 95%; margin:5px auto;"><b>名字:</b></p>
+	<p style="width: 95%; margin:5px auto;">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
+	<div class="like" cid="" align="right" style="width: 95%; margin: 5px auto;">
+		<p style="display: inline-block; vertical-align: middle;">已赞 <b style="color: red;">103</b></p>
+		<a href="javascript:void(0)" style="display: inline-block; vertical-align: middle;">
+			<img style="height:20px; width:23px;" src="../static/img/heart.png" />
+		</a>
+	</div>
+</div>
+
+<div class="qrcode" style="margin: 1px auto; padding:5px; visibility: visible;">
+	<p style="width: 95%; margin: 5px auto;"> 可关注以下二维码获取高考动态：</p>
+	<img style="width: 100%;" src="../static/img/qrcode.jpg" />
+</div>
+
+</body>
+</html>

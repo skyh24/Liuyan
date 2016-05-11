@@ -1,0 +1,31 @@
+<html>
+<head>
+<title> The {{ num }} times </title>
+</head>
+<body>
+<p> hello {{ name }}  </p>
+<p> {{ shipdate|date "F j, Y" }} </p>
+<ul>
+{% for item in item_list %}
+    {% if forloop.first %} <p> first </p> {% endif %}
+    {% ifequal forloop.counter 2 %} <p> second </p> {% endifequal %}
+    <li> {{ forloop.counter }} : {{ item }} </li>
+    {# comment #}
+    {% comment %}
+    name|lower
+    my_list|first|upper
+    |truncatewords:"30"
+    {% endcomment %}
+{% empty %}
+    <p> empty </p>
+{% endfor %}
+</ul>
+
+{% if ordered %} 
+    <h1> ordered </h1>
+{% else %}
+    <h4> not ordered </h4>
+{% endif %}
+
+</body>
+</html>
