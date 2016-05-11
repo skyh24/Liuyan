@@ -74,7 +74,7 @@ def cheer(request):
         info = "DB insert"
         db = MySQLdb.connect(user=USER, db=DBNAME, passwd=PASS, host=HOST)
         cur = db.cursor()
-        cur.execute('insert into tb_liuyan (user, comment, likes) values (%s, %s, 1)' % (name, comment));
+        cur.execute("insert into tb_liuyan (user, comment, likes) values ('%s', '%s', 1)" % (name, comment));
         db.commit()
         #
         cur.close()
@@ -96,16 +96,16 @@ def like(request):
         info = "DB select"
         cur.execute("select likes from tb_liuyan where cid=%s" % cid);
         rows = cur.fetchall()
-        likes = rows[0][0]
+        likes = int(rows[0][0])
         likes += 1
         print "cid like", cid, likes
 
         info = "DB insert"
-        cur.execute('update tb_liuyan likes=%s where cid=%s ' % (likes, cid));
+        cur.execute('update tb_liuyan set likes=%s where cid=%s ' % (likes, cid));
         db.commit()
         cur.close()
         db.close()
         info = "Success"
     except Exception, e:
         print "%s" % str(e) 
-    return HttpRespnse(info)
+    return HttpResponse(info)

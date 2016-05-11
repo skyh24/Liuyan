@@ -72,7 +72,7 @@
 			var cid = $(this).attr("cid");
 			$.post("/like/", {"cid": cid}, function(result){
 				num = $("#b"+cid).html()
-				$("#b"+cid).html(num+1)
+				$("#b"+cid).html(parseInt(num)+1)
                 alert(result);
 			});
 		});
