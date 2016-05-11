@@ -59,9 +59,14 @@
 		$("#submit").click(function(){
 			var name=$("#name").val()
 			var comm=$("#comment").val()
-			alert(name+":"+comm+comm.length)
-			if(name=="") {alert("名字不能为空")}
-			if(comm.length < 10) {alert("不能少于5个字")}
+			//alert(name+":"+comm+comm.length)
+			if(name=="") {alert("名字不能为空") return;}
+			if(comm.length < 5) {alert("寄语不能少于5个字") return;}
+			$("#name").val("")
+			$("#comment").val("")
+			$.post("/cheer/", {"name": name, "comm", comm}, function(result){
+				alert(result);
+			});
 		});
 		$(".like").click(function(){
 			var cid = $(this).attr("cid");
