@@ -88,18 +88,17 @@
 </div>
 
 {% for item in item_list %}
-	{% if forloop.counter = 3 %}
+	{% ifequal forloop.counter 3 %}
 	<div class="qrcode" style="margin: 1px auto; padding:5px; visibility: visible;">
 		<p style="width: 95%; margin: 5px auto;"> 可关注以下二维码获取高考动态：</p>
 		<img style="width: 100%;" src="../static/img/qrcode.jpg" />
 	</div>
-	{% endif %}
-	
+	{% endifequal %}
 	<div class="liuyan" style="margin: 1px auto; padding:5px; visibility: visible;">
-		<p style="width: 95%; margin:5px auto;"><b>{{ name }}:</b></p>
-		<p style="width: 95%; margin:5px auto;">{{ comment }}</p>
+		<p style="width: 95%; margin:5px auto;"><b>{{ item.name }}:</b></p>
+		<p style="width: 95%; margin:5px auto;">{{ item.comm }}</p>
 		<div class="like" cid="{{ cid }}" align="right" style="width: 95%; margin: 5px auto;">
-			<p style="display: inline-block; vertical-align: middle;">已赞 <b style="color: red;">{{ likes }}</b></p>
+			<p style="display: inline-block; vertical-align: middle;">已赞 <b style="color: red;">{{ item.like }}</b></p>
 			<a href="javascript:void(0)" style="display: inline-block; vertical-align: middle;">
 				<img style="height:20px; width:23px;" src="../static/img/heart.png" />
 			</a>
