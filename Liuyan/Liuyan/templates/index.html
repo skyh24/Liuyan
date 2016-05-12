@@ -7,7 +7,7 @@
 	<script type="text/javascript" src="../static/js/jquery-2.1.4.min.js"></script>
 	<style type="text/css">
 	body {
-		background-color: blue;
+		background-color: #CCCCCC;
 		margin: 0px;
 	}
 
@@ -96,8 +96,8 @@
 		<input id="name" name="name" style="display: inline-block; width: 100px; vertical-align:bottom;" placeholder="您的大名" />
 	</div>
 	<div id="tel" align="right" style="width: 95%; margin: 5px auto;">
-		<h3 style="display: inline-block; margin:5px auto;">您的手机</h3>
-		<input id="tel" name="tel" style="display: inline-block; width: 150px; vertical-align:bottom;" placeholder="点赞前三将获得明信片一份哦！" />
+		<h3 style="display: inline-block; margin:5px auto; font-size: 15px;">您的手机</h3>
+		<input id="tel" name="tel" style="display: inline-block; width: 160px; vertical-align:bottom; font-size: 8px;" placeholder="点赞前三将获得明信片一份哦！" />
 	</div>
 	<textarea id="comment" name="comment" rows="4" placeholder="请留下高考寄语！" style="width: 95%; margin:5px auto;" ></textarea> 
 	<div id="cheer" align="right" style="width: 95%; margin: 5px auto;">
@@ -111,8 +111,8 @@
 	<div class="qrcode" style="margin: 1px auto; padding:5px; visibility: visible;">
 		<p style="width: 95%; margin: 5px auto;"> 可关注以下二维码获取高考动态：</p>
 		<img style="width: 100%;" src="../static/img/qrcode.jpg" />
+		<a href="#" style="width: 100%; text-align: center;">可返回展示页面并分享朋友圈哦</a>
 	</div>
-	<div class="share" style="margin: 1px auto; padding:5px; visibility: visible;"><a href="#">可返回展示并分享朋友圈哦</a></div>
 	{% endifequal %}
 	<div class="liuyan" style="margin: 1px auto; padding:5px; visibility: visible;">
 		<p style="width: 95%; margin:5px auto;"><b>{{ item.name }}:</b>&nbsp;{{ item.tel }}</p>
