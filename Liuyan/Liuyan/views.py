@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.template.loader import get_template
 from django.shortcuts import render_to_response
 from django.template import Template, Context
@@ -36,16 +37,16 @@ HOST = 'localhost'
 PORT = 3306
 
 def comment(request):
-    db = MySQLdb.connect(user='root', db='liuyan', passwd='891010', host='localhost')
+    db = MySQLdb.connect(user='root', db='liuyan', passwd='891010', host='localhost', charset="utf8")
     cur = db.cursor()
     cur.execute('SELECT count(*) from liuyan')
     rows = cur.fetchall()
-    cnt = rows[0][0]
+    cnt = int(rows[0][0]) + 1
     print cnt
 
     cur.execute('SELECT * FROM liuyan ORDER BY likes desc, created desc')
     rows = cur.fetchall()
-    print rows
+    #print rows
     item_list = []
     for row in rows:
         item = {}
@@ -56,7 +57,7 @@ def comment(request):
         item["like"] = row[4]
         item["create"] = row[5]
         item_list.append(item)
-    print item_list
+    #print item_list
     
     cur.close()
     db.close()
@@ -70,14 +71,17 @@ def cheer(request):
         info = "Recv data"
         #req = json.loads(request.raw_post_data)
         name = request.POST['name']
-        name = request.POST['tel']
+        tel = request.POST['tel']
         comment = request.POST['comm']
-        print name, comment
+        print name, tel, comment
 
         info = "DB insert"
-        db = MySQLdb.connect(user=USER, db=DBNAME, passwd=PASS, host=HOST)
+        db = MySQLdb.connect(user=USER, db=DBNAME, passwd=PASS, host=HOST, charset="utf8")
         cur = db.cursor()
-        cur.execute("insert into liuyan (name, tel, comment, likes, created) values ('%s', '%s', '%s', 1, now())" % (name, tel, comment));
+        sql = "insert into liuyan (name, tel, comment, likes, created) values ('%s', '%s', '%s', 1, now())" % (name, tel, comment)
+        print sql
+        cur.execute(sql)
+        #cur.execute("insert into liuyan (name, tel, comment, likes, created) values ('%s', '%s', '%s', 1, now())" % (name, tel, comment))
         db.commit()
         #
         cur.close()
@@ -94,7 +98,7 @@ def like(request):
     try:
         info = "Recv data"
         cid = request.POST['cid']
-        db = MySQLdb.connect(user=USER, db=DBNAME, passwd=PASS, host=HOST)
+        db = MySQLdb.connect(user=USER, db=DBNAME, passwd=PASS, host=HOST, charset="utf8")
         cur = db.cursor()
         info = "DB select"
         cur.execute("select likes from liuyan where cid=%s" % cid);

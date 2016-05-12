@@ -60,27 +60,39 @@
 			var name=$("#name").val()
 			var comm=$("#comment").val()
 			var tel =$("#tel").val()
-			//alert(name+":"+comm+comm.length)
+			//alert(name+":"+comm+tel+comm.length)
 			if(name=="") {alert("名字不能为空"); return;}
 			if(comm.length < 5) {alert("寄语不能少于5个字"); return;}
+            if(tel.length<10 || tel.length>15) {alert("请输入正确的手机号"); return;}
 			$.post("/cheer/", {"name": name, "comm": comm, "tel": tel}, function(result){
 			    //$("#comment").val("")
 			    //$("#name").val("")
 			    //$("#tel").val("")
 			    window.location.reload();
-                alert(result);
+                //alert(result);
 			});
-		});
+		});/*
 		$(".like").click(function(){
 			var cid = $(this).attr("cid");
-			$.post("/like/", {"cid": cid}, function(result){
+		    $(this).removeClass("like");	
+            $.post("/like/", {"cid": cid}, function(result){
 				num = $("#b"+cid).html()
 				$("#b"+cid).html(parseInt(num)+1)
-                alert(result);
+                $("#i"+cid).attr("src", "../static/img/black.png")
+                //alert(result);
 			});
-		});
+		});*/
 	})
-		
+
+    function onClick(cid) {
+        $.post("/like/", {"cid": cid}, function(result) {
+            num = $("#b"+cid).html()
+            $("#b"+cid).html(parseInt(num)+1)
+            $("#i"+cid).attr("src", "../static/img/black.png")
+            $("#a"+cid).attr("href", "javascript:void(0)") 
+        })
+    
+	}	
 		
 	</script>
 </head>
@@ -90,16 +102,16 @@
 </div>
 
 <div class="commdiv" style="margin: 1px auto; padding:5px; visibility: visible;">
-	<div id="name" align="right" style="width: 95%; margin: 5px auto;">
+	<div id="user" align="right" style="width: 95%; margin: 5px auto;">
 		<h3 style="display: inline-block; margin:5px auto;">我是</h3>
 		<h2 style="display: inline-block; color: red; margin:5px auto; font-family: 'SimSun';">义忠仁</h2>
 		<input id="name" name="name" style="display: inline-block; width: 100px; vertical-align:bottom;" placeholder="您的大名" />
 	</div>
-	<div id="tel" align="right" style="width: 95%; margin: 5px auto;">
+	<div id="teldiv" align="right" style="width: 95%; margin: 5px auto;">
 		<h3 style="display: inline-block; margin:5px auto; font-size: 15px;">您的手机</h3>
-		<input id="tel" name="tel" style="display: inline-block; width: 160px; vertical-align:bottom; font-size: 8px;" placeholder="点赞前三将获得明信片一份哦！" />
+		<input id="tel" name="tel" style="display: inline-block; width: 165px; vertical-align:bottom; font-size: 15px;" placeholder="点赞前三将获明信片一份哦！" />
 	</div>
-	<textarea id="comment" name="comment" rows="4" placeholder="请留下高考寄语！" style="width: 95%; margin:5px auto;" ></textarea> 
+	<textarea id="comment" name="comment" rows="4" placeholder="请留下高考寄语！(5-800字)" style="width: 95%; margin:5px auto;" ></textarea> 
 	<div id="cheer" align="right" style="width: 95%; margin: 5px auto;">
 		<h4 style="display: inline-block; margin: 10px auto; vertical-align: middle;">您是第<b style="color: red; margin: 5px">{{ count }}</b>个为二中高考</h4>
 		<button id="submit" type="submit">加油</button>
@@ -107,23 +119,24 @@
 </div>
 
 {% for item in item_list %}
-	{% ifequal forloop.counter 3 %}
-	<div class="qrcode" style="margin: 1px auto; padding:5px; visibility: visible;">
-		<p style="width: 95%; margin: 5px auto;"> 可关注以下二维码获取高考动态：</p>
-		<img style="width: 100%;" src="../static/img/qrcode.jpg" />
-		<a href="#" style="width: 100%; text-align: center;">可返回展示页面并分享朋友圈哦</a>
-	</div>
-	{% endifequal %}
 	<div class="liuyan" style="margin: 1px auto; padding:5px; visibility: visible;">
-		<p style="width: 95%; margin:5px auto;"><b>{{ item.name }}:</b>&nbsp;{{ item.tel }}</p>
+        <p style="font-size: 10px;width: 95%; margin:5px auto;"><b style="font-size: 20px;">{{ item.name }}:</b>&nbsp;&nbsp;&nbsp;&nbsp;{{ item.tel }}</p>
 		<p style="width: 95%; margin:5px auto;">{{ item.comm }}</p>
 		<div class="like" cid="{{ item.cid }}" align="right" style="width: 95%; margin: 5px auto;">
 			<p style="display: inline-block; vertical-align: middle;">已赞 <b id="b{{ item.cid }}" style="color: red;">{{ item.like }}</b></p>
-			<a href="javascript:void(0)" style="display: inline-block; vertical-align: middle;">
-				<img style="height:20px; width:23px;" src="../static/img/heart.png" />
+			<a href="javascript:onClick({{ item.cid }})" id="a{{ item.cid }}" style="display: inline-block; vertical-align: middle;">
+				<img id="i{{ item.cid }}" style="height:20px; width:23px;" src="../static/img/heart.png" />
 			</a>
 		</div>
 	</div>
+    {% ifequal forloop.counter 3 %}
+	<div class="qrcode" style="margin: 1px auto; padding:5px; visibility: visible;">
+		<p style="width: 95%; margin: 5px auto;"> 可关注以下二维码获取高考动态：</p>
+		<img style="width: 100%;" src="../static/img/qrcode.jpg" />
+		<a href="#" style="width: 100%; text-align: center;"><p style="width: 95%; margin: 5px auto;text-align:center;">可返回展示页面并分享朋友圈哦</p></a>
+	</div>
+	{% endifequal %}
+	
 {% endfor %}
 
 
