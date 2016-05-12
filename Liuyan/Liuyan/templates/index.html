@@ -7,7 +7,7 @@
 	<script type="text/javascript" src="../static/js/jquery-2.1.4.min.js"></script>
 	<style type="text/css">
 	body {
-		background-color: #FFFFCC;
+		background-color: blue;
 		margin: 0px;
 	}
 
@@ -59,12 +59,15 @@
 		$("#submit").click(function(){
 			var name=$("#name").val()
 			var comm=$("#comment").val()
+			var tel =$("#tel").val()
 			//alert(name+":"+comm+comm.length)
 			if(name=="") {alert("名字不能为空"); return;}
 			if(comm.length < 5) {alert("寄语不能少于5个字"); return;}
-			$.post("/cheer/", {"name": name, "comm": comm}, function(result){
-			    $("#comment").val("")
-			    $("#name").val("")
+			$.post("/cheer/", {"name": name, "comm": comm, "tel": tel}, function(result){
+			    //$("#comment").val("")
+			    //$("#name").val("")
+			    //$("#tel").val("")
+			    window.location.reload();
                 alert(result);
 			});
 		});
@@ -87,10 +90,14 @@
 </div>
 
 <div class="commdiv" style="margin: 1px auto; padding:5px; visibility: visible;">
-	<div id="user" align="right" style="width: 95%; margin: 5px auto;">
+	<div id="name" align="right" style="width: 95%; margin: 5px auto;">
 		<h3 style="display: inline-block; margin:5px auto;">我是</h3>
 		<h2 style="display: inline-block; color: red; margin:5px auto; font-family: 'SimSun';">义忠仁</h2>
 		<input id="name" name="name" style="display: inline-block; width: 100px; vertical-align:bottom;" placeholder="您的大名" />
+	</div>
+	<div id="tel" align="right" style="width: 95%; margin: 5px auto;">
+		<h3 style="display: inline-block; margin:5px auto;">您的手机</h3>
+		<input id="tel" name="tel" style="display: inline-block; width: 150px; vertical-align:bottom;" placeholder="点赞前三将获得明信片一份哦！" />
 	</div>
 	<textarea id="comment" name="comment" rows="4" placeholder="请留下高考寄语！" style="width: 95%; margin:5px auto;" ></textarea> 
 	<div id="cheer" align="right" style="width: 95%; margin: 5px auto;">
@@ -105,9 +112,10 @@
 		<p style="width: 95%; margin: 5px auto;"> 可关注以下二维码获取高考动态：</p>
 		<img style="width: 100%;" src="../static/img/qrcode.jpg" />
 	</div>
+	<div class="share" style="margin: 1px auto; padding:5px; visibility: visible;"><a href="#">可返回展示并分享朋友圈哦</a></div>
 	{% endifequal %}
 	<div class="liuyan" style="margin: 1px auto; padding:5px; visibility: visible;">
-		<p style="width: 95%; margin:5px auto;"><b>{{ item.name }}:</b></p>
+		<p style="width: 95%; margin:5px auto;"><b>{{ item.name }}:</b>&nbsp;{{ item.tel }}</p>
 		<p style="width: 95%; margin:5px auto;">{{ item.comm }}</p>
 		<div class="like" cid="{{ item.cid }}" align="right" style="width: 95%; margin: 5px auto;">
 			<p style="display: inline-block; vertical-align: middle;">已赞 <b id="b{{ item.cid }}" style="color: red;">{{ item.like }}</b></p>

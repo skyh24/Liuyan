@@ -38,12 +38,12 @@ PORT = 3306
 def comment(request):
     db = MySQLdb.connect(user='root', db='liuyan', passwd='891010', host='localhost')
     cur = db.cursor()
-    cur.execute('SELECT count(*) from tb_liuyan')
+    cur.execute('SELECT count(*) from liuyan')
     rows = cur.fetchall()
     cnt = rows[0][0]
     print cnt
 
-    cur.execute('SELECT * FROM tb_liuyan ORDER BY likes')
+    cur.execute('SELECT * FROM liuyan ORDER BY likes desc, created desc')
     rows = cur.fetchall()
     print rows
     item_list = []
@@ -51,8 +51,10 @@ def comment(request):
         item = {}
         item["cid"] = row[0]
         item["name"] = row[1]
-        item["comm"] = row[2]
-        item["like"] = row[3]
+        item["tel"] = '*'*7 + row[2][-4:]
+        item["comm"] = row[3]
+        item["like"] = row[4]
+        item["create"] = row[5]
         item_list.append(item)
     print item_list
     
@@ -68,13 +70,14 @@ def cheer(request):
         info = "Recv data"
         #req = json.loads(request.raw_post_data)
         name = request.POST['name']
+        name = request.POST['tel']
         comment = request.POST['comm']
         print name, comment
 
         info = "DB insert"
         db = MySQLdb.connect(user=USER, db=DBNAME, passwd=PASS, host=HOST)
         cur = db.cursor()
-        cur.execute("insert into tb_liuyan (user, comment, likes) values ('%s', '%s', 1)" % (name, comment));
+        cur.execute("insert into liuyan (name, tel, comment, likes, created) values ('%s', '%s', '%s', 1, now())" % (name, tel, comment));
         db.commit()
         #
         cur.close()
@@ -94,14 +97,14 @@ def like(request):
         db = MySQLdb.connect(user=USER, db=DBNAME, passwd=PASS, host=HOST)
         cur = db.cursor()
         info = "DB select"
-        cur.execute("select likes from tb_liuyan where cid=%s" % cid);
+        cur.execute("select likes from liuyan where cid=%s" % cid);
         rows = cur.fetchall()
         likes = int(rows[0][0])
         likes += 1
         print "cid like", cid, likes
 
         info = "DB insert"
-        cur.execute('update tb_liuyan set likes=%s where cid=%s ' % (likes, cid));
+        cur.execute('update liuyan set likes=%s where cid=%s ' % (likes, cid));
         db.commit()
         cur.close()
         db.close()
