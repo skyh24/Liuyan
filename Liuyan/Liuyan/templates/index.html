@@ -37,7 +37,7 @@
 	    outline: thin dotted \9;    /* IE6-9 */  
 	    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
 	}
-	button {
+	button, #back{
 		color: #fff;
     	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
     	background-image: linear-gradient(to bottom,#ee5f5b,#bd362f);
@@ -117,6 +117,10 @@
 		<button id="submit" type="submit">加油</button>
 	</div>
 </div>
+<div id="back" style="margin: 1px auto; padding:5px; visibility: visible;">
+<a href="#" style="width: 100%; text-align: center; background-color: #00CC00;"><p style="width: 95%; margin: 5px auto;text-align:center;">可返回展示页面并分享朋友圈哦</p></a>
+<p style="width: 100%; text-align: center; font-size: 8px">（如果微信屏蔽了输入按钮，可以右上角通过浏览器取得更好体验）</p>
+</div>
 
 {% for item in item_list %}
 	<div class="liuyan" style="margin: 1px auto; padding:5px; visibility: visible;">
@@ -133,7 +137,7 @@
 	<div class="qrcode" style="margin: 1px auto; padding:5px; visibility: visible;">
 		<p style="width: 95%; margin: 5px auto;"> 可关注以下二维码获取高考动态：</p>
 		<img style="width: 100%;" src="../static/img/qrcode.jpg" />
-		<a href="#" style="width: 100%; text-align: center;"><p style="width: 95%; margin: 5px auto;text-align:center;">可返回展示页面并分享朋友圈哦</p></a>
+		<a id="back" href="#" style="width: 100%; text-align: center;"><p style="width: 95%; margin: 5px auto;text-align:center;">可返回展示页面并分享朋友圈哦</p></a>
 	</div>
 	{% endifequal %}
 	
