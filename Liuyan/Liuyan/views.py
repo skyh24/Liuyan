@@ -7,6 +7,9 @@ from django.http import HttpResponse
 import simplejson as json
 import datetime
 import MySQLdb
+import sys
+reload(sys)
+sys.setdefaultencoding( "utf-8" )
 
 def hello(request):
     return HttpResponse("Hello World!")
@@ -67,19 +70,19 @@ def comment(request):
 @csrf_exempt
 def cheer(request):
     dict = {}
-    try:
+    #try:
+    if request.method == 'POST':
         info = "Recv data"
         #req = json.loads(request.raw_post_data)
         name = request.POST['name']
-        tel = request.POST['tel']
         comment = request.POST['comm']
-        print name, tel, comment
+        tel = request.POST['tel']
+        print "name ", name, tel, comment
 
         info = "DB insert"
         db = MySQLdb.connect(user=USER, db=DBNAME, passwd=PASS, host=HOST, charset="utf8")
         cur = db.cursor()
         sql = "insert into liuyan (name, tel, comment, likes, created) values ('%s', '%s', '%s', 1, now())" % (name, tel, comment)
-        print sql
         cur.execute(sql)
         #cur.execute("insert into liuyan (name, tel, comment, likes, created) values ('%s', '%s', '%s', 1, now())" % (name, tel, comment))
         db.commit()
@@ -87,8 +90,8 @@ def cheer(request):
         cur.close()
         db.close()
         info = "Success"
-    except Exception, e:
-        print "%s" % str(e)
+    #except Exception, e:
+    #    print "%s" % str(e)
     dict['message']=info
     myjson=json.dumps(dict)
     return HttpResponse(myjson)
